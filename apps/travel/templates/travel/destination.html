@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Destination</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style media="screen">
+    .center {
+        margin: auto;
+        width: 50%;
+        border: 3px solid gray;
+        padding: 10px;
+        text-align: center;
+    }
+    .header {
+        text-align: right;
+        padding: 20px;
+    }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/travels">Home</a> |
+        <a href="/">Logout</a> |
+        <a href="/travels">Back</a>
+    </div>
+    <div class="center">
+        <h2>Destination Information:</h2>
+        <h3> {{ trip_info.destination }}</h3>
+        <p>Posted/Planned by: {{ planner.name }}</p>
+        <p>Current trip plan: {{ trip_info.plan }}</p>
+        <p>Current trip start date: {{ trip_info.start_date }}</p>
+        <p>Current trip end date: {{ trip_info.end_date }}</p>
+
+        <h2>Users joining the trip:</h2>
+        {% for user in users %}
+            <p>{{ user.name }}</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

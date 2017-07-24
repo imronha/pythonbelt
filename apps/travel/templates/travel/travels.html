@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style media="screen">
+    h1{
+        display: inline-block;
+        text-align: left;
+    }
+    .header p{
+        display: inline-block;
+        /*vertical-align: top;*/
+        text-align: right;
+        margin-left: 500px;
+    }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome, {{ request.session.name }}!</h1>
+        <p>Not {{ request.session.name }}? <a href="/logout">Logout</a></p>
+    </div>
+
+    <h3>Your Trip Schedules</h3>
+    <table class="table table-striped">
+        <tr>
+            <th>Destination</th>
+            <th>Travel Start Date</th>
+            <th>Travel End Date</th>
+            <th>Plan</th>
+            <th>Remove Trip?</th>
+        </tr>
+        {% for trip in all_users_trips %}
+            {% if trip.joined != request.session.user_id %}
+            <tr>
+                <td><a href="/destination/{{trip.id}}">{{ trip.destination }}</a></td>
+                <td>{{ trip.start_date }}</td>
+                <td>{{ trip.end_date }}</td>
+                <td>{{ trip.plan }}</td>
+                <form action="remove" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="hidden" value="{{trip.id}}">
+                    <td><input type="submit" name="" value="Remove Trip"></td>
+                </form>
+            </tr>
+
+            {% endif %}
+        {% endfor %}
+    </table>
+    <hr>
+    <h3>Other User's Travel Plans</h3>
+    <table class="table table-striped">
+        <tr>
+            <th>Trip Planned by</th>
+            <th>Destination</th>
+            <th>Travel Start Date</th>
+            <th>Travel End Date</th>
+            <th>Plan</th>
+            <th>Do you want to join?</th>
+        </tr>
+        {% for trip in all_trips%}
+            {% if trip.joined.id != request.session.user_id %}
+            <tr>
+                <td>{{ trip.user.name }}</td>
+                <td><a href="/destination/{{trip.id}}"> {{ trip.destination }}</a></td>
+                <td>{{ trip.start_date }}</td>
+                <td>{{ trip.end_date }}</td>
+                <td>{{ trip.plan }}</td>
+                <form action="/joined" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="hidden" value="{{trip.id}}">
+                    <td><input type="submit" name="" value="Yes!"></td>
+                </form>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+    <p><a href="/add_trip_page">Add Travel Plan</a></p>
+</body>
+</html>

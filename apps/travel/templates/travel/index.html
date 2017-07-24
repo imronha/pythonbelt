@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login and Registration</title>
+    <link href='https://fonts.googleapis.com/css?family=Julius Sans One' rel='stylesheet'>
+    <style media="screen">
+    .center {
+        margin: auto;
+        width: 50%;
+        border: 3px solid gray;
+        padding: 10px;
+        text-align: center;
+    }
+    .errors {
+        color: red;
+    }
+    </style>
+</head>
+<body>
+    <div id="wrapper" class="center">
+        <div class="container">
+            <form action="/register" method="post">
+                <h1>Welcome!</h1>
+                <h2>Registration</h2>
+                {% csrf_token %}
+                Name: <input type="text" name="name" value=""><br>
+                Username: <input type="text" name="username" value=""><br>
+                Password:<input type="password" name="pw" value=""><br>
+                <p>*Password must be at least 8 characters long</p><br>
+                Confirm Password: <input type="password" name="pwconfirm" value=""><br>
+                <input class="btn-primary"type="submit" name="" value="Submit">
+            </form>
+        </div>
+        <div class="container">
+            <form action='/login' method='POST'>
+                <h2>Login</h2>
+                {% csrf_token %}
+                Username:<input type="text" name="username"><br>
+                Password:<input type="password" name="pw"><br>
+                <input class="btn-success"type="submit" value="Login">
+            </form>
+            <div class="errors">
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
